@@ -15,14 +15,20 @@ public class WordFind {
     static String direction;
 
     private static String ReadFile(String[] _args, int i) {
+        String file;
         try (Scanner scanner = new Scanner(_args[i])) {
-            String s = scanner.nextLine();
+            file = scanner.nextLine();
             scanner.reset();
-            return s;
+            if (!file.endsWith(".txt")) {
+                System.out.println("Error! Incorrect argument(s).");
+                System.out.println("Restart program with correct argument(s) and try again.");
+                System.exit(0);
+            }
         } catch (Exception e) {
-            System.out.println("That file does not exist. Restart program to try again.");
+            System.out.println("That file does not exist. Restart program and try again.");
             return null;
         }
+        return file;
     }
 
     private static void ConvertPuzzleFile(String fileName) throws IOException {
@@ -33,6 +39,11 @@ public class WordFind {
         while (inputData.hasNext()) {
             lineTest = inputData.nextLine();
             if (!lineTest.startsWith("-")) {
+                if (!lineTest.startsWith("|")) {
+                    System.out.println("Error! Incorrect file, please input a word-find grid file.");
+                    System.out.println("Restart program with correct argument(s) and try again.");
+                    System.exit(0);
+                }
                 rows++;
                 lineTest = lineTest.replace("|", "");
                 rowLists.add(lineTest);
@@ -150,6 +161,11 @@ public class WordFind {
     }
 
     public static void main(String[] args) throws IOException {
+        if (args.length == 0) {
+            System.out.println("Error, no argument(s) given.");
+            System.out.println("Restart program with correct argument(s) and try again.");
+            System.exit(0);
+        }
         ConvertPuzzleFile(ReadFile(args, 0));
         if (args.length == 1) {
             System.out.print("Enter a word to be found: ");
