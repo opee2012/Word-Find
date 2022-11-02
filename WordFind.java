@@ -127,7 +127,7 @@ public class WordFind {
 
     private static boolean ArraySearch(String inputWord) {
         String spacedWord = inputWord;
-        inputWord.replace(" ", "");
+        inputWord = inputWord.replace(" ", "");
         letterNum = 0;
         char letter = inputWord.charAt(letterNum);
         for (int i = 0; i < rows; i++) {
